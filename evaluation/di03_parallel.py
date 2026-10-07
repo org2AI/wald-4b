@@ -30,7 +30,7 @@ def run(c,engine_factory=WaldNativeAuto):
  suite=Suite(c['suite_dir'],'0.3');verified=suite.verify(strict=True)
  assert verified['edition']=='0.3'
  out=Path(c['out_dir']);out.mkdir(exist_ok=False)
- opts=dict(native_path=c['native_path'],temperature_path=c['temperature_path'],temperature_sha256=c['temperature_sha256'],deadline_epoch=c['deadline_epoch'],endpoint='http://127.0.0.1:8371',model=c['model_id'],max_model_len=131072)
+ opts=dict(native_path=c['native_path'],temperature_path=c['temperature_path'],temperature_sha256=c['temperature_sha256'],deadline_epoch=c['deadline_epoch'],endpoint='http://127.0.0.1:8371',model=c['model_id'],max_model_len=131072,reference_root=c.get('reference_root'))
  first=engine_factory(**opts)
  environment={'engine':'wald-v2-native-auto0.7','model_source':first.provenance,'engine_options':opts,'concurrency':c['concurrency'],'frozen_corpus':verified,'latency':first.latency,'runner_sha256':sha(__file__),'root_contract_sha256':c['root_contract_sha256'],'boot_epoch':c['GPU_boot_epoch'],'deadline_epoch':c['deadline_epoch'],'no_model_startup_or_power_operations':True}
  write_json(out/'environment.json',environment)

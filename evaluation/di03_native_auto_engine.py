@@ -8,6 +8,8 @@ single-request latency measurements.
 import hashlib
 import importlib.util
 import time
+import json
+import sys
 from pathlib import Path
 from decision_index.engines.base import Engine, Unsupported, validate
 
@@ -20,7 +22,7 @@ class WaldNativeAuto(Engine):
 
     def __init__(self, native_path, temperature_path, temperature_sha256,
                  deadline_epoch, endpoint='http://127.0.0.1:8371',
-                 model='04400-c18', max_model_len=131072, **options):
+                 model='04400-c18', max_model_len=131072, reference_root=None, **options):
         super().__init__(**options)
         assert model == '04400-c18', 'This contract binds C16B only'
         path = Path(native_path)
@@ -29,6 +31,13 @@ class WaldNativeAuto(Engine):
         assert hashlib.sha256(temp.read_bytes()).hexdigest() == temperature_sha256
         self.deadline_epoch = float(deadline_epoch)
         assert self.deadline_epoch > time.time()
+        if reference_root:
+            root = Path(reference_root)
+            pins = json.loads((root / 'source-pins.json').read_text())['files_sha256']
+            for rel, digest in pins.items():
+                assert hashlib.sha256((root / rel).read_bytes()).hexdigest() == digest
+            if str(root) not in sys.path:
+                sys.path.insert(0, str(root))
         spec = importlib.util.spec_from_file_location('wald_frozen_native', path)
         self.native = importlib.util.module_from_spec(spec)
         spec.loader.exec_module(self.native)

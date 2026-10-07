@@ -1,0 +1,154 @@
+{
+ "A": {
+  "single": 1.6817928305074288,
+  "buckets": {
+   "choice|2": {
+    "temperature": 1.5157165665103978,
+    "n": 37,
+    "fitted": true
+   },
+   "choice|3-4": {
+    "temperature": 1.9318726578496908,
+    "n": 69,
+    "fitted": true
+   },
+   "choice|5-8": {
+    "temperature": 1.6817928305074288,
+    "n": 17,
+    "fitted": false
+   },
+   "choice|9+": {
+    "temperature": 1.3660402567543957,
+    "n": 27,
+    "fitted": true
+   },
+   "noul|2": {
+    "temperature": 1.9999999999999998,
+    "n": 107,
+    "fitted": true
+   },
+   "score|5-8": {
+    "temperature": 1.6817928305074288,
+    "n": 18,
+    "fitted": false
+   }
+  },
+  "min_rows": 20,
+  "rows": 275,
+  "readout": "A"
+ },
+ "B256": {
+  "single": 4.756828460010884,
+  "buckets": {
+   "choice|2": {
+    "temperature": 6.498019170849887,
+    "n": 37,
+    "fitted": true
+   },
+   "choice|3-4": {
+    "temperature": 4.0,
+    "n": 69,
+    "fitted": true
+   },
+   "choice|5-8": {
+    "temperature": 4.756828460010884,
+    "n": 17,
+    "fitted": false
+   },
+   "choice|9+": {
+    "temperature": 3.863745315699382,
+    "n": 27,
+    "fitted": true
+   },
+   "noul|2": {
+    "temperature": 5.856342783782502,
+    "n": 107,
+    "fitted": true
+   },
+   "score|5-8": {
+    "temperature": 4.756828460010884,
+    "n": 18,
+    "fitted": false
+   }
+  },
+  "min_rows": 20,
+  "rows": 275,
+  "readout": "B256"
+ },
+ "B512": {
+  "single": 4.924577653379665,
+  "buckets": {
+   "choice|2": {
+    "temperature": 6.727171322029713,
+    "n": 37,
+    "fitted": true
+   },
+   "choice|3-4": {
+    "temperature": 4.43827788827138,
+    "n": 69,
+    "fitted": true
+   },
+   "choice|5-8": {
+    "temperature": 4.924577653379665,
+    "n": 17,
+    "fitted": false
+   },
+   "choice|9+": {
+    "temperature": 3.863745315699382,
+    "n": 27,
+    "fitted": true
+   },
+   "noul|2": {
+    "temperature": 5.856342783782502,
+    "n": 107,
+    "fitted": true
+   },
+   "score|5-8": {
+    "temperature": 4.924577653379665,
+    "n": 18,
+    "fitted": false
+   }
+  },
+  "min_rows": 20,
+  "rows": 275,
+  "readout": "B512"
+ },
+ "B": {
+  "single": 4.924577653379665,
+  "buckets": {
+   "choice|2": {
+    "temperature": 6.727171322029713,
+    "n": 37,
+    "fitted": true
+   },
+   "choice|3-4": {
+    "temperature": 4.43827788827138,
+    "n": 69,
+    "fitted": true
+   },
+   "choice|5-8": {
+    "temperature": 4.924577653379665,
+    "n": 17,
+    "fitted": false
+   },
+   "choice|9+": {
+    "temperature": 3.863745315699382,
+    "n": 27,
+    "fitted": true
+   },
+   "noul|2": {
+    "temperature": 5.856342783782502,
+    "n": 107,
+    "fitted": true
+   },
+   "score|5-8": {
+    "temperature": 4.924577653379665,
+    "n": 18,
+    "fitted": false
+   }
+  },
+  "min_rows": 20,
+  "rows": 275,
+  "readout": "B512"
+ }
+}

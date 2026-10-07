@@ -32,5 +32,8 @@
     "Preserve v1.1/v1.2 revisions and keep old scores attached to old weights",
     "Verify all uploaded v2 inference file SHA at immutable HF revision"
   ],
-  "future_lora": "Consider only after frozen v2 error analysis and independent DEV validation; no paid LoRA run authorized by this preparation"
+  "future_lora": "Consider only after frozen v2 error analysis and independent DEV validation; no paid LoRA run authorized by this preparation",
+  "native_reference": "evaluation/native-reference/source-pins.json",
+  "temperature_sha256": "a0f72cd2d0a653e81051e5a0c77fc1a69131552a8102b580a93a6dbe7908b2da",
+  "HF_publication_order": "Only after Auto public evaluation ends, per latest user instruction"
 }
