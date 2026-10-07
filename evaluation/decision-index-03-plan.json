@@ -1,0 +1,37 @@
+{
+  "status": "PREPARED_NOT_RUN_OFFICIAL_03_REQUIRES_PRIVATE_EVALUATION",
+  "model_name": "Wald-Q4B v2",
+  "checkpoint": "04400-c18",
+  "model_sha256": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
+  "primary_policy": "onepass",
+  "secondary_fixed_policies": [
+    "gate0.7",
+    "always512"
+  ],
+  "thinking": "native Qwen chat template; no additional thinking LoRA",
+  "interface": "POST /v1/systemone",
+  "kit_commit_checked": "87d4650b42b377c0291a89c1f1a879f9b31082bf",
+  "available_kit_editions": [
+    "0.2",
+    "0.2.1"
+  ],
+  "DI03_formula": {
+    "public": 0.2,
+    "same_skill_private": 0.5,
+    "new_domain_private": 0.3
+  },
+  "public03_requests": 110201,
+  "public03_scoreable_rows": 109759,
+  "new_model_calls": 0,
+  "paid_GPU_started": false,
+  "missing": [
+    "Public kit with frozen 0.3 corpus/scorer or organizer execution",
+    "Native v2 packaged-server parity",
+    "Organizer private tests and official result"
+  ],
+  "sources": [
+    "https://huggingface.co/spaces/multimodalart/jev-decision-index",
+    "https://huggingface.co/spaces/multimodalart/jev-decision-index/blob/main/methodology.html",
+    "https://github.com/apolinario/decision-index"
+  ]
+}
