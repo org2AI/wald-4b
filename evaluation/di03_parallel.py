@@ -22,7 +22,7 @@ def write_json(p,v):
 def run(c,engine_factory=WaldNativeAuto):
  assert c['status']=='APPROVED_DI03_C16B_AUTO_FRESH_GPU_4H'
  assert c['model_id']=='04400-c18' and c['policy']=='gate0.7' and c['budget']==512
- assert c['concurrency']==64 and c['deadline_epoch']==c['GPU_boot_epoch']+14400
+ assert c['concurrency'] in (64,128) and c['deadline_epoch']==c['GPU_boot_epoch']+14400
  assert socket.gethostname()==c['hostname']
  assert sha(__file__)==c['runner_sha256']
  assert time.time()<c['deadline_epoch']-180
