@@ -29,8 +29,8 @@ class WaldNativeAuto(Engine):
         assert hashlib.sha256(path.read_bytes()).hexdigest() == NATIVE_SHA
         temp = Path(temperature_path)
         assert hashlib.sha256(temp.read_bytes()).hexdigest() == temperature_sha256
-        self.deadline_epoch = float(deadline_epoch)
-        assert self.deadline_epoch > time.time()
+        self.deadline_epoch = float(deadline_epoch) if deadline_epoch is not None else None
+        assert self.deadline_epoch is None or self.deadline_epoch > time.time()
         if reference_root:
             root = Path(reference_root)
             pins = json.loads((root / 'source-pins.json').read_text())['files_sha256']
@@ -43,7 +43,7 @@ class WaldNativeAuto(Engine):
         spec.loader.exec_module(self.native)
         self.client, self.sov = self.native.make_client(
             endpoint, model, int(max_model_len),
-            time.monotonic() + self.deadline_epoch - time.time())
+            time.monotonic() + self.deadline_epoch - time.time() if self.deadline_epoch is not None else None)
         self.table = self.sov.load_tables(temp).get('A')
         self.model = model
         self.provenance = {'model': model, 'model_sha256': MODEL_SHA,
@@ -56,7 +56,7 @@ class WaldNativeAuto(Engine):
             'new_training': False}
 
     def __call__(self, state, questions):
-        if time.time() >= self.deadline_epoch - 120:
+        if self.deadline_epoch is not None and time.time() >= self.deadline_epoch - 120:
             raise TimeoutError('Registered evaluation deadline reached')
         request = {'state': state, 'questions': questions}
         try:

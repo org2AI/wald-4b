@@ -40,3 +40,9 @@ def test_budget_expiry_prevents_an_inference_call():
  def answer(*args):raise AssertionError('must not call model')
  e=engine(answer);e.deadline_epoch=mod.time.time()+119
  with pytest.raises(TimeoutError):e('state',{})
+
+
+def test_until_complete_has_no_time_cutoff():
+ def answer(*args):return {"answers":{"q":{"type":"choice","choice":"a","probabilities":{"a":.6,"b":.4}}}}
+ e=engine(answer);e.deadline_epoch=None
+ e("state",{"q":{"type":"choice","criteria":{"a":"one","b":"two"}}})
