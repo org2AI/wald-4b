@@ -120,6 +120,9 @@ model-index:
       url: https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json
 ---
 
+> **v2 development update (2026-10-07):** C16B (`04400-c18`) is selected as the v2 starting checkpoint. [Scores, scope and native-thinking serving requirements](docs/V2.md). v2 weights/server are not yet a public release.
+
+
 <div align="center">
   <h1>Wald-Q4B</h1>
   <p><strong>Decide directly. Think when needed. Return probabilities.</strong></p>

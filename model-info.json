@@ -48,7 +48,7 @@
       "max_tokens_per_thought": 512
     }
   },
-  "thinking_scope": "2–26 options and sufficient context; wider sets use grouped readout; insufficient thought space retains initial answer",
+  "thinking_scope": "2\u201326 options and sufficient context; wider sets use grouped readout; insufficient thought space retains initial answer",
   "evaluation": {
     "jevadvbench": {
       "questions": 812,
@@ -172,5 +172,13 @@
     "revision": "50f94ecd5d6e7e8459e9c198ef811bfaba12a3fe"
   },
   "thinking_note": "v1.2 is a one-pass model. On the JevBench public set it scored 198/231 with medium and with high (one run each) against 204/231 with none. Thinking efforts are evaluated on v1.1.",
-  "training_data_note": "perturbed copies of v1.1 training questions; inserted texts written by Claude Haiku (Anthropic) from our templates; targets are v1.1 answers on the clean questions; no JevAdvBench text"
+  "training_data_note": "perturbed copies of v1.1 training questions; inserted texts written by Claude Haiku (Anthropic) from our templates; targets are v1.1 answers on the clean questions; no JevAdvBench text",
+  "next_version": {
+    "version": "v2",
+    "checkpoint": "04400-c18",
+    "status": "EVALUATED_CHECKPOINT_SELECTED_FOR_V2",
+    "model_sha256": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
+    "evaluation": "evaluation/c16b-v2.json",
+    "serving_parity": "Pending native chat-template integration; legacy Reasoning server is not the evaluated v2 reader"
+  }
 }

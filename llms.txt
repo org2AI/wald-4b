@@ -31,3 +31,5 @@ Key facts:
 - [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/main/CONTAMINATION.md): evaluation caveats
 - [CITATION.cff](https://huggingface.co/org2ai/Wald-4B/blob/main/CITATION.cff)
 - [Server source](https://github.com/org2AI/wald-4b/tree/main/server)
+
+- v2 development: C16B 04400-c18 selected; evaluated native thinking, not the legacy Reasoning server. See docs/V2.md and evaluation/c16b-v2.json. Public v2 serving release pending.
