@@ -3,11 +3,8 @@
   "model_name": "Wald-Q4B v2",
   "checkpoint": "04400-c18",
   "model_sha256": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
-  "primary_policy": "onepass",
-  "secondary_fixed_policies": [
-    "gate0.7",
-    "always512"
-  ],
+  "primary_policy": "gate0.7",
+  "secondary_fixed_policies": [],
   "thinking": "native Qwen chat template; no additional thinking LoRA",
   "interface": "POST /v1/systemone",
   "kit_commit_checked": "62d2f51de34a2de64906345b6bc3e98e27ff55c7",
@@ -57,5 +54,14 @@
     "official_rebuild_working_GB_approx": 17,
     "local_available_GiB_approx": 13,
     "status": "NEEDS_WORKSPACE_BEFORE_REBUILD"
-  }
+  },
+  "evaluated_policies": [
+    "gate0.7"
+  ],
+  "thought_budget_tokens": 512,
+  "user_authorized_GPU_max_seconds": 14400,
+  "user_authorized_price_estimate_CNY_per_hour": 6.98,
+  "user_authorized_max_estimate_CNY": 27.92,
+  "budget_clock": "Fresh actual GPU boot; setup before boot; no extension",
+  "full_suite_builder": "Local CPU official builders, disposable inputs one builder at a time, 3GiB local disk reserve; every final official SHA must match"
 }

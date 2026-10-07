@@ -1,0 +1,36 @@
+{
+  "status": "PREPARED_NOT_PUBLISHED",
+  "target_hub_repo": "org2ai/Wald-4B",
+  "version": "v2",
+  "checkpoint": "04400-c18",
+  "parent_checkpoint": "04000-c16",
+  "model_sha256": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
+  "verified_inference_files_sha256": {
+    "model.safetensors": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
+    "head.pt": "b4883bd12339613ce1fb6c6aab6b42732d0763eca0bfd32869fa83aa338b5183",
+    "config.json": "5d771b1a9a6db58fd6fdfd6500e49de2a43e34fd9c0380f07f7f099c1d720f77",
+    "generation_config.json": "62153eb6c69f2e1f426beaa8002b7186437e949c7588167085df14e10e9c0a73",
+    "tokenizer.json": "bd53432f0de26d67a83b634040d4f043053da4ecd0c759e7f4b24ad4f8bb9a81",
+    "tokenizer_config.json": "bee8eba30f0eb4af73c0fe2cd06d0f89b657d7819941c438157ec42f7c80ea87",
+    "chat_template.jinja": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715"
+  },
+  "weights": {
+    "format": "BF16 single model.safetensors",
+    "new_lora": false,
+    "new_training": false,
+    "local_full_model_copy": false
+  },
+  "candidate_default_policy": "gate0.7",
+  "thought_budget_tokens": 512,
+  "HF_current_revision": "34be474b55b914b7415a484c884d5dd6b9de52f1",
+  "public_weights_written": false,
+  "release_checks": [
+    "Full pinned public DI 0.3 coverage and official scorer report, or explicit incomplete status",
+    "Native packaged serving parity and calibrated probability mapping",
+    "Actual serial latency measurement under intended policy",
+    "C16/C16B training provenance and benchmark overlap disclosure",
+    "Preserve v1.1/v1.2 revisions and keep old scores attached to old weights",
+    "Verify all uploaded v2 inference file SHA at immutable HF revision"
+  ],
+  "future_lora": "Consider only after frozen v2 error analysis and independent DEV validation; no paid LoRA run authorized by this preparation"
+}

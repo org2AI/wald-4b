@@ -176,9 +176,13 @@
   "next_version": {
     "version": "v2",
     "checkpoint": "04400-c18",
-    "status": "EVALUATED_CHECKPOINT_SELECTED_FOR_V2",
+    "status": "V2_RELEASE_PREPARATION_AUTO_PUBLIC03_PENDING",
     "model_sha256": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
     "evaluation": "evaluation/c16b-v2.json",
-    "serving_parity": "Pending native chat-template integration; legacy Reasoning server is not the evaluated v2 reader"
+    "serving_parity": "Pending native chat-template integration; legacy Reasoning server is not the evaluated v2 reader",
+    "candidate_default_policy": "gate0.7",
+    "max_thought_tokens": 512,
+    "release_plan": "release/v2/release-plan.json",
+    "new_lora": false
   }
 }
