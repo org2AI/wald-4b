@@ -1,0 +1,48 @@
+{
+ "schema": "wald/serving-parity/2",
+ "what": "Packaged wald-serve-native-vision 0.2.0 on the release weights (04701-c22 + chat vision tower), text-only inputs, vs the official evaluated responses of the text-only 04701-c22 reads. No gold, no scoring.",
+ "runtime": "one RTX 5090 D, vLLM 0.30.0 + transformers 5.17.0, evaluated engine arguments, 32 concurrent requests (official reads: 128 per replica)",
+ "date": "2026-10-08",
+ "runs": [
+  {
+   "effort": "none",
+   "official_view": "onepass",
+   "requests": 231,
+   "errors": 0,
+   "questions": 231,
+   "same_choice": 230,
+   "same_choice_rate": 0.9956709956709957,
+   "same_mode": 231,
+   "max_abs_dp": 0.02436047642793515,
+   "mean_max_abs_dp": 0.003236613157959797,
+   "input": "jev231.jsonl"
+  },
+  {
+   "effort": "auto",
+   "official_view": "gate0.7",
+   "requests": 231,
+   "errors": 0,
+   "questions": 231,
+   "same_choice": 227,
+   "same_choice_rate": 0.9826839826839827,
+   "same_mode": 230,
+   "max_abs_dp": 0.9209360233099926,
+   "mean_max_abs_dp": 0.02191963876994253,
+   "input": "jev231.jsonl"
+  },
+  {
+   "effort": "auto",
+   "official_view": "gate0.7",
+   "requests": 300,
+   "errors": 0,
+   "questions": 692,
+   "same_choice": 682,
+   "same_choice_rate": 0.9855491329479769,
+   "same_mode": 687,
+   "max_abs_dp": 0.9248810803786568,
+   "mean_max_abs_dp": 0.016725321800576055,
+   "input": "di03-300.jsonl"
+  }
+ ],
+ "reading": "One pass reproduces the evaluated text-only answers (230/231; the one change is a near tie). Under Auto 0.7 the thought is sampled and depends on GPU batch composition, so a few answers after a thought and a few gate decisions near 0.7 differ between runs; reader, policy and calibration are identical."
+}

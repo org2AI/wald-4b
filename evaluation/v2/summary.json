@@ -1,0 +1,157 @@
+{
+ "schema": "wald-q4b-release-evaluation/2",
+ "release": "Wald-Q4B v2",
+ "checkpoint": "04701-c22",
+ "model_sha256": "6ae382f5a0ed9f4c53cd0953cb9606b1627a6816350340a59114860e6cf6f29a",
+ "status": "Self-run, self-scored; nothing submitted.",
+ "scores": {
+  "policies_measured": [
+   "onepass",
+   "auto0.7"
+  ],
+  "di03_public_auto": {
+   "value": 54.18,
+   "balanced_raw": 65.65,
+   "breadth_skill": 52.45,
+   "requests": 140620,
+   "scoreable": 140178,
+   "excluded": 442,
+   "errors": 0,
+   "areas": {
+    "knowledge": 0.412,
+    "language": 0.598,
+    "retrieval": 0.528,
+    "tools": 0.793,
+    "arts": 0.301
+   },
+   "gsm8k": 0.876,
+   "requests_with_thought": 0.402,
+   "source": "results/c16d-di03-full-1008/README.md + official-CPU-scores/"
+  },
+  "rows": [
+   {
+    "en": "Decision Index 0.3, complete public suite",
+    "zh": "",
+    "onepass": "not run",
+    "auto0.7": "**54.18** (our full run)",
+    "jev": "57.96 (board public column)"
+   },
+   {
+    "en": "JevBench public set (231)",
+    "zh": "",
+    "onepass": "204/231",
+    "auto0.7": "**210/231**",
+    "jev": "200/231"
+   },
+   {
+    "en": "JevBench-XL TEST (8,177)",
+    "zh": "",
+    "onepass": "65.20 %",
+    "auto0.7": "**65.78 %**",
+    "jev": "67.85 %"
+   }
+  ],
+  "latency": {
+   "requests": 750,
+   "warmup": 10,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell (96 GB)",
+   "auto_median_ms": 147.9,
+   "auto_mean_ms": 478.0,
+   "auto_p80_ms": 532.4,
+   "auto_thought_share": 0.3307,
+   "onepass_median_ms": 41.9,
+   "onepass_mean_ms": 110.2,
+   "weights": "the release graft without its unused MTP head (same language-model and vision tensors; the MTP head only acts under speculative decoding, which is off)",
+   "source": "results/wald4b-v2-release/latency-pro6000-750.json",
+   "rtx5090_same_read": {
+    "auto_median_ms": 202.9,
+    "onepass_median_ms": 71.3,
+    "weights": "release graft incl. MTP"
+   }
+  },
+  "not_measured": [
+   "Always 512 policy",
+   "DI 0.2.1 sample",
+   "multistep_decisions",
+   "XL calibration (ECE)"
+  ]
+ },
+ "comparison": {
+  "rows": [
+   [
+    "**Wald-Q4B v2 \u00b7 Auto 0.7** (`04701-c22`)",
+    "**54.18**",
+    "210",
+    "65.78 %"
+   ],
+   [
+    "Wald-Q4B v2 \u00b7 one pass",
+    "not run",
+    "204",
+    "65.20 %"
+   ],
+   [
+    "C16B `04400-c18` (unreleased v2 candidate) \u00b7 Auto 0.7",
+    "52.62",
+    "204",
+    "67.54 %"
+   ],
+   [
+    "C16C `04500-c19` (unreleased) \u00b7 Auto 0.7",
+    "53.29",
+    "205",
+    "67.18 %"
+   ],
+   [
+    "Wald-Q4B v1.2 \u00b7 `none` (tag v1.2)",
+    "not run",
+    "204 \u00b2",
+    "not run"
+   ],
+   [
+    "Jev (`jev-1.13.0`, hosted)",
+    "57.96 \u00b3",
+    "200",
+    "67.85 %"
+   ]
+  ],
+  "board_snapshot": "multimodalart/jev-decision-index data/v03.json @9bf2dc44 (generated 2026-10-06T17:39Z)",
+  "board_rows": [
+   [
+    "Jev (TypeSafe, hosted)",
+    57.96,
+    60.11
+   ],
+   [
+    "Bespoke Nimble 9B v3",
+    57.19,
+    54.67
+   ],
+   [
+    "Kev 27B",
+    56.69,
+    58.78
+   ],
+   [
+    "ezjev 4B s2",
+    50.82,
+    46.95
+   ],
+   [
+    "jiwo 4B",
+    45.76,
+    42.86
+   ],
+   [
+    "vLLM-SR Decision 2.0 Nox 4B",
+    44.21,
+    44.95
+   ],
+   [
+    "Kev 4B r10",
+    37.95,
+    39.5
+   ]
+  ]
+ }
+}

@@ -1,0 +1,31 @@
+{
+ "schema": "wald/vision-sanity/1",
+ "what": "Zero-shot image decisions, our harness and conversions (ledger 488), one pass; not Decision Index Vision board numbers",
+ "rows": [
+  [
+   "CV-Bench (board subset)",
+   "2,038",
+   "82.43 %",
+   "**85.48 %**"
+  ],
+  [
+   "BLINK (3 subsets, val)",
+   "387",
+   "78.55 %",
+   "**82.43 %**"
+  ],
+  [
+   "RealWorldQA",
+   "589",
+   "73.68 %",
+   "**75.04 %**"
+  ],
+  [
+   "All three",
+   "3,014",
+   "80.23 %",
+   "**83.05 %** (+2.82 pp [+1.69, +3.98])"
+  ]
+ ],
+ "note": "Our harness and our conversions of the public items (one pass, image budget 65,536–1,048,576 px, ledger 488); not Decision Index Vision board numbers. The board runs its own vision suites through this server."
+}

@@ -1,188 +1,203 @@
 {
-  "name": "Wald-Q4B",
-  "version": "v1.2",
-  "aliases": [
-    "Wald-4B"
-  ],
-  "checkpoint": "02600-f19",
-  "description": "Open-weight 4B decision model that returns a calibrated probability for every option through a Jev-compatible POST /v1/systemone API; one pass or optional thinking; self-hosted. Independent, not affiliated with TypeSafe AI. v1.2 is the robustness release: v1.1 plus one merged LoRA stage against distracting and adversarial text.",
-  "base_model": "Qwen/Qwen3.5-4B-Base",
-  "model_url": "https://huggingface.co/org2ai/Wald-4B",
-  "weights_tag": "v1.2",
-  "weight_precision": "BF16",
-  "parameter_scale": "4B",
-  "license": "Apache-2.0 (weights and code); see PROVENANCE.md for source-data usage limitations",
-  "use_cases": [
-    "tool selection",
-    "agent routing",
-    "classification",
-    "clarification decisions"
-  ],
-  "endpoint": "POST /v1/systemone",
-  "input_fields": [
-    "state",
-    "questions",
-    "effort"
-  ],
-  "output": "per-option probabilities",
-  "default_effort": "none",
-  "efforts": {
-    "none": {
-      "gate": 0,
-      "generated_thoughts": 0
-    },
-    "low": {
-      "gate": 0.5,
-      "max_thought_tokens": 512
-    },
-    "medium": {
-      "gate": 0.7,
-      "max_thought_tokens": 512
-    },
-    "high": {
-      "gate": 1.01,
-      "max_thought_tokens": 512
-    },
-    "high-k2..high-k8": {
-      "thoughts": "2..8",
-      "max_tokens_per_thought": 512
-    }
+ "name": "Wald-Q4B v2",
+ "repo": "org2ai/Wald-4B",
+ "revision": "v2.0",
+ "checkpoint": "04701-c22",
+ "parent_checkpoint": "04400-c18",
+ "base_model": "Qwen/Qwen3.5-4B",
+ "base_revision": "851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a",
+ "license": "apache-2.0",
+ "parameters": "4B",
+ "dtype": "bfloat16",
+ "model_files": {
+  "chat_template.jinja": {
+   "sha256": "a4aee8afcf2e0711942cf848899be66016f8d14a889ff9ede07bca099c28f715",
+   "bytes": 7756
   },
-  "thinking_scope": "2\u201326 options and sufficient context; wider sets use grouped readout; insufficient thought space retains initial answer",
-  "evaluation": {
-    "jevadvbench": {
-      "questions": 812,
-      "attack_types": 9,
-      "effort": "none",
-      "mean_flip_rate_pct": 4.6,
-      "v1_1_mean_flip_rate_pct": 9.2,
-      "jev_1_13_mean_flip_rate_pct": 6.1,
-      "paired_diff_vs_v1_1_pp": [
-        -4.6,
-        -5.5,
-        -3.6
-      ],
-      "clean_accuracy_143_human_reviewed_pct": 76.2,
-      "v1_1_clean_accuracy_pct": 79.0,
-      "clean_paired_diff_vs_v1_1_pp": [
-        -2.8,
-        -6.2,
-        -0.6
-      ],
-      "harness": "JevAdvBench/JevAdvBench@3218e05 request bytes and analysis code",
-      "status": "self-run; not submitted"
-    },
-    "jevbench_public": {
-      "items": 231,
-      "effort": "none",
-      "correct": 204,
-      "accuracy": 0.8831,
-      "ece": 0.045,
-      "brier": 0.191,
-      "hardware": "NVIDIA RTX 5090 32 GB",
-      "harness": "fstandhartinger/jevbench@9ec6f15a (jevbench.cli, typesafe adapter, serial, loopback)",
-      "status": "self-scored; public items were a development scoreboard, not held out; not submitted",
-      "thinking_check": {
-        "medium_correct": 198,
-        "high_correct": 198,
-        "runs_each": 1
-      }
-    },
-    "decision_index_sample": {
-      "edition": "0.2.1",
-      "requests": 6948,
-      "read": "one pass",
-      "balanced_skill": 50.03,
-      "v1_1_balanced_skill": 49.76,
-      "paired_diff": [
-        0.27,
-        -0.36,
-        1.05
-      ],
-      "status": "sample only; no complete-suite run for v1.2"
-    },
-    "details": "https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json"
+  "config.json": {
+   "sha256": "ddc63e1c717afa86c865bb5e01313d89d72bb53b97ad4a8a03ba8510c0621670",
+   "bytes": 3161
   },
-  "documentation_languages": [
-    "en",
-    "zh"
-  ],
-  "docs": {
-    "en": "README.md",
-    "zh": "docs/readmes/README.zh.md",
-    "serving": "RUNBOOK.md",
-    "sources": "PROVENANCE.md",
-    "evaluation_notes": "CONTAMINATION.md",
-    "api": "docs/api.md",
-    "citation": "CITATION.cff",
-    "llms": "llms.txt"
+  "generation_config.json": {
+   "sha256": "62153eb6c69f2e1f426beaa8002b7186437e949c7588167085df14e10e9c0a73",
+   "bytes": 116
   },
-  "affiliation": "Independent; not affiliated with TypeSafe AI",
-  "evaluations": [
-    {
-      "note": "v1.1 results (not this revision's weights)",
-      "decision_index_complete_suite": {
-        "benchmark": "Decision Index",
-        "edition": "0.2.1",
-        "scope": "complete suite",
-        "score": 54.59,
-        "metric": "balanced_skill",
-        "requests": 150317,
-        "ok": 150317,
-        "effort": "high",
-        "hardware": "NVIDIA RTX PRO 6000 96 GB",
-        "status": "author-run; maintainer validation pending",
-        "submission": "https://github.com/apolinario/decision-index/pull/30"
-      },
-      "jevbench_public": {
-        "benchmark": "JevBench",
-        "split": "public",
-        "items": 231,
-        "effort": "none",
-        "correct": 203,
-        "accuracy": 0.8788,
-        "ece": 0.041,
-        "brier": 0.188,
-        "latency_p50_ms": 33,
-        "latency_p95_ms": 168,
-        "hardware": "NVIDIA RTX PRO 6000 96 GB",
-        "harness": "fstandhartinger/jevbench@9ec6f15a (jevbench.cli, typesafe adapter, serial, loopback)",
-        "status": "self-scored; public items were a development scoreboard, not held out; leaderboard measurement requested",
-        "request": "https://github.com/fstandhartinger/jevbench/issues/146"
-      }
-    }
-  ],
-  "links": {
-    "model": "https://huggingface.co/org2ai/Wald-4B",
-    "github": "https://github.com/org2AI/wald-4b",
-    "results_dataset": "https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results",
-    "decision_index_submission": "https://github.com/apolinario/decision-index/pull/30",
-    "jevbench_request": "https://github.com/fstandhartinger/jevbench/issues/146",
-    "api": "https://huggingface.co/org2ai/Wald-4B/blob/main/docs/api.md",
-    "evaluation_summary": "https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json"
+  "merges.txt": {
+   "sha256": "a9d356d7bdf1ef4949e3e748e95b8e10ad9d4e2e838eddc38a0a7b6b94d1db8d",
+   "bytes": 3353259
   },
-  "weights_sha256": {
-    "model-00001-of-00002.safetensors": "0b15067f769e7388bd598aabafa2ea3211a3a0c4e49e47d07c4f65c65ffc25dd",
-    "model-00002-of-00002.safetensors": "7cff102b314edeb3dc5abfa7063f72ad3e888884da237601239dc3582074120a"
+  "model-00001-of-00003.safetensors": {
+   "sha256": "10cb7cd22f524f1b33271f8432bcb09409bd879c11d999ea18ca7dd5f8828f5a",
+   "bytes": 4757977272
   },
-  "parent_release": {
-    "version": "v1.1",
-    "checkpoint": "022D0-f7",
-    "tag": "v1.1",
-    "revision": "50f94ecd5d6e7e8459e9c198ef811bfaba12a3fe"
+  "model-00002-of-00003.safetensors": {
+   "sha256": "ed5e7bd4b2e67eee390857268a7660986aca32068c78e6f483e866c27f90b79b",
+   "bytes": 3653581040
   },
-  "thinking_note": "v1.2 is a one-pass model. On the JevBench public set it scored 198/231 with medium and with high (one run each) against 204/231 with none. Thinking efforts are evaluated on v1.1.",
-  "training_data_note": "perturbed copies of v1.1 training questions; inserted texts written by large frontier models from our templates (vendors and model names not listed); targets are v1.1 answers on the clean questions; no JevAdvBench text",
-  "next_version": {
-    "version": "v2",
-    "checkpoint": "04400-c18",
-    "status": "V2_RELEASE_PREPARATION_AUTO_PUBLIC03_PENDING",
-    "model_sha256": "2859df99ed481592cdc3731fd768bf29ccd63273b2dab623642ad3b38b0e14c4",
-    "evaluation": "evaluation/c16b-v2.json",
-    "serving_parity": "Pending native chat-template integration; legacy Reasoning server is not the evaluated v2 reader",
-    "candidate_default_policy": "gate0.7",
-    "max_thought_tokens": 512,
-    "release_plan": "release/v2/release-plan.json",
-    "new_lora": false
+  "model-00003-of-00003.safetensors": {
+   "sha256": "9a8340e453e63f70185e56fde60aeae26085fe3c39e20ac1662b4325f01a78eb",
+   "bytes": 908262184
+  },
+  "model.safetensors.index.json": {
+   "sha256": "6db63a968a513eb0693feee5ccbc440cbbee43c6b644c0bd33e880ca7d0b54b3",
+   "bytes": 67340
+  },
+  "preprocessor_config.json": {
+   "sha256": "27225450ac9c6529872ee1924fcb0962ff5634834f817040f444118116f4e516",
+   "bytes": 390
+  },
+  "tokenizer.json": {
+   "sha256": "bd53432f0de26d67a83b634040d4f043053da4ecd0c759e7f4b24ad4f8bb9a81",
+   "bytes": 19989509
+  },
+  "tokenizer_config.json": {
+   "sha256": "bee8eba30f0eb4af73c0fe2cd06d0f89b657d7819941c438157ec42f7c80ea87",
+   "bytes": 1123
+  },
+  "video_preprocessor_config.json": {
+   "sha256": "7768af27c1fafa9cc9011c1dc20067e03f8915e03b63504550e11d5066986d13",
+   "bytes": 385
+  },
+  "vocab.json": {
+   "sha256": "ce99b4cb2983d118806ce0a8b777a35b093e2000a503ebde25853284c9dfa003",
+   "bytes": 6722759
+  },
+  "graft-manifest.json": {
+   "sha256": "e33ce57511cb924d2bd5559a143c37cf12f1df1e6de911f0a7d4fdbbc0b85eb8",
+   "bytes": 113687
+  },
+  "graft-report.json": {
+   "sha256": "d4ae76c16d404c665f84e10079f460221f4c1434c23e0b923bf9a6deb91c1385",
+   "bytes": 765
+  },
+  "SHA256SUMS": {
+   "sha256": "1ba76d9616233fc4f347859c07c9359492aaa5e45bf5f2f1fb8ce43df3cce4ad",
+   "bytes": 1326
   }
+ },
+ "serving": {
+  "engine": "native-v2-vision",
+  "checkpoint": "04701-c22",
+  "variant": "vision: 04701-c22 language model (426 tensors, byte-identical) + Qwen/Qwen3.5-4B@851bf6e8 chat vision tower (297) + chat MTP head (15) = 738 keys; Qwen3_5ForConditionalGeneration",
+  "model_sha256": "6ae382f5a0ed9f4c53cd0953cb9606b1627a6816350340a59114860e6cf6f29a",
+  "effort": "auto",
+  "prompt_format": "repeat_state_plain",
+  "max_model_len": 131072,
+  "thought_budget": 512,
+  "temperature": "temperature.json",
+  "temperature_sha256": "a0f72cd2d0a653e81051e5a0c77fc1a69131552a8102b580a93a6dbe7908b2da",
+  "vision": {
+   "server": "wald-serve-native-vision",
+   "image_prompt_format": "plain",
+   "max_images": 16,
+   "vllm_args": [
+    "--limit-mm-per-prompt",
+    "{\"image\": 16, \"video\": 0}",
+    "--mm-processor-kwargs",
+    "{\"size\": {\"shortest_edge\": 65536, \"longest_edge\": 1048576}}",
+    "--trust-request-chat-template"
+   ]
+  },
+  "vllm": {
+   "version": "0.30.0",
+   "transformers": "5.17.0",
+   "args": [
+    "--max-model-len",
+    "131072",
+    "--gpu-memory-utilization",
+    "0.85",
+    "--max-num-seqs",
+    "128",
+    "--seed",
+    "0"
+   ],
+   "env": {
+    "VLLM_USE_FLASHINFER_SAMPLER": "0"
+   }
+  }
+ },
+ "training": {
+  "stage1": "c16 v8, one pass, full parameter (04000-c16): 385,447 records / 106.6M text tokens (137.65M forward tokens in the chat template)",
+  "stage2": "c18 continuation (04400-c18): 125 steps, 11,974,079 forward tokens, 36,509 rows / 39,699 questions, lr 2e-6, state-KL 0.05 to the original chat model",
+  "stage3": "c22 continuation (04701-c22 = step 300 of a 638-step run): 29,440,183 forward tokens / 174,726 questions seen of a 61.6M-token, 82,807-row mix, lr 2e-6, thought LM on \u2264 512 tokens, state-KL 0.05 to 04400-c18"
+ },
+ "evaluation": {
+  "policies_measured": [
+   "onepass",
+   "auto0.7"
+  ],
+  "di03_public_auto": {
+   "value": 54.18,
+   "balanced_raw": 65.65,
+   "breadth_skill": 52.45,
+   "requests": 140620,
+   "scoreable": 140178,
+   "excluded": 442,
+   "errors": 0,
+   "areas": {
+    "knowledge": 0.412,
+    "language": 0.598,
+    "retrieval": 0.528,
+    "tools": 0.793,
+    "arts": 0.301
+   },
+   "gsm8k": 0.876,
+   "requests_with_thought": 0.402,
+   "source": "results/c16d-di03-full-1008/README.md + official-CPU-scores/"
+  },
+  "rows": [
+   {
+    "en": "Decision Index 0.3, complete public suite",
+    "zh": "",
+    "onepass": "not run",
+    "auto0.7": "**54.18** (our full run)",
+    "jev": "57.96 (board public column)"
+   },
+   {
+    "en": "JevBench public set (231)",
+    "zh": "",
+    "onepass": "204/231",
+    "auto0.7": "**210/231**",
+    "jev": "200/231"
+   },
+   {
+    "en": "JevBench-XL TEST (8,177)",
+    "zh": "",
+    "onepass": "65.20 %",
+    "auto0.7": "**65.78 %**",
+    "jev": "67.85 %"
+   }
+  ],
+  "latency": {
+   "requests": 750,
+   "warmup": 10,
+   "gpu": "NVIDIA RTX PRO 6000 Blackwell (96 GB)",
+   "auto_median_ms": 147.9,
+   "auto_mean_ms": 478.0,
+   "auto_p80_ms": 532.4,
+   "auto_thought_share": 0.3307,
+   "onepass_median_ms": 41.9,
+   "onepass_mean_ms": 110.2,
+   "weights": "the release graft without its unused MTP head (same language-model and vision tensors; the MTP head only acts under speculative decoding, which is off)",
+   "source": "results/wald4b-v2-release/latency-pro6000-750.json",
+   "rtx5090_same_read": {
+    "auto_median_ms": 202.9,
+    "onepass_median_ms": 71.3,
+    "weights": "release graft incl. MTP"
+   }
+  },
+  "not_measured": [
+   "Always 512 policy",
+   "DI 0.2.1 sample",
+   "multistep_decisions",
+   "XL calibration (ECE)"
+  ]
+ },
+ "previous_releases": {
+  "v1.2": "02600-f19",
+  "v1.1": "022D0-f7",
+  "v1.0": "021A0-f10"
+ },
+ "training_data_note": "Includes synthetic data generated and/or labelled by large frontier models; see PROVENANCE.md.",
+ "submitted": false
 }

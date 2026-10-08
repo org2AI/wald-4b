@@ -1,0 +1,9 @@
+{
+ "schema": "wald/serial-latency-summary/1",
+ "gpu": "one RTX PRO 6000",
+ "requests": 750,
+ "auto0.7_median_ms": 147.9,
+ "onepass_median_ms": 41.9,
+ "auto0.7_requests_that_think": 0.331,
+ "how": "serial, one request in flight, warm engine after 10 warm-up requests, processing time, the packaged server"
+}

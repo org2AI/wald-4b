@@ -1,5 +1,8 @@
 """`wald-serve`: the TypeSafe `POST /v1/systemone` server for Wald-4B.
 
+This is the v1.x (paren layout) server. A weights directory whose serving.json declares `"engine": "native-v2"`
+(Wald-4B v2, checkpoint 04400-c18) is handed to `wald-serve-native` (native.py) instead.
+
 One command starts vLLM on the weights (a loopback-only sidecar) and this front-end in front of it:
 
     wald-serve --model /path/to/Wald-4B --port 8000
@@ -145,6 +148,20 @@ def main(argv=None):
     a = ap.parse_args(argv)
 
     home = a.model or (str(Path(a.gguf).parent) if a.gguf else None)
+    engine_kind = json.loads((Path(home) / "serving.json").read_text()).get("engine") if home and (Path(home) / "serving.json").is_file() else None
+    if engine_kind in ("native-v2", "native-v2-vision"):
+        # Wald-4B v2 is read with its native chat template; the v1 paren reader below would not reproduce its scores.
+        if a.gguf:
+            raise SystemExit("serving.json declares the native v2 engine; GGUF files of v2 are not supported by this server")
+        if engine_kind == "native-v2-vision":
+            from .native_vision import main as native_main
+        else:
+            from .native import main as native_main
+        argv2 = ["--model", a.model, "--port", str(a.port), "--host", a.host]
+        if a.effort: argv2 += ["--effort", a.effort]
+        if a.prompt_format: argv2 += ["--prompt-format", a.prompt_format]
+        if a.vllm_args: argv2 += ["--vllm-args", a.vllm_args]
+        return native_main(argv2)
     cfg = {**DEFAULTS, **read_serving(home)}
     effort = a.effort or cfg["effort"]
     fmt = a.prompt_format or cfg["prompt_format"]

@@ -94,7 +94,7 @@ here.
 | [chengxuphd/liar2](https://huggingface.co/datasets/chengxuphd/liar2) | train | 1, 2, 3, 4 (replay) | Apache-2.0 (card) | |
 | [allenai/prosocial-dialog](https://huggingface.co/datasets/allenai/prosocial-dialog) | train | 1, 2, 3, 4 (replay) | CC-BY-4.0 (card) | also in the wide replay |
 | [HuggingFaceH4/ultrafeedback_binarized](https://huggingface.co/datasets/HuggingFaceH4/ultrafeedback_binarized) | train_prefs | 1, 2, 3, 4 (replay) | MIT (card) | test_prefs never used |
-| [Anthropic/hh-rlhf](https://huggingface.co/datasets/Anthropic/hh-rlhf) | train | 1, 2, 3, 4 (replay) | MIT (card) | |
+| HH-RLHF | train | 1, 2, 3, 4 (replay) | MIT (card) | |
 | [glaiveai/glaive-function-calling-v2](https://huggingface.co/datasets/glaiveai/glaive-function-calling-v2) | train (the only split) | 1, 2, 3, 4 (replay) | Apache-2.0 (card) | also a seed source for the synthetic tool items. Shares user queries with ToolRet (§1) |
 | [Team-ACE/ToolACE](https://huggingface.co/datasets/Team-ACE/ToolACE) | train (the only split) | 1, 2, 3, 4 (replay) | Apache-2.0 (card) | also in the wide replay and the tool items. Shares user queries with ToolRet (§1) |
 | [copenlu/fever_gold_evidence](https://huggingface.co/datasets/copenlu/fever_gold_evidence) | train | 1, 2, 3, 4 (replay) | unknown | |
@@ -146,7 +146,7 @@ verification item plants an error in a human-written solution by code.
 
 | dataset | split(s) used | stages | licence (as stated) | note |
 |---|---|---|---|---|
-| [openai/gsm8k](https://huggingface.co/datasets/openai/gsm8k) (main) | train | 1, 2, 3, 4 (replay) | MIT (card) | routing prompts and the worked solutions of the verification items. Test never used. RouterBench embeds GSM8K questions (§1) |
+| GSM8K (main) | train | 1, 2, 3, 4 (replay) | MIT (card) | routing prompts and the worked solutions of the verification items. Test never used. RouterBench embeds GSM8K questions (§1) |
 | [EleutherAI/hendrycks_math](https://huggingface.co/datasets/EleutherAI/hendrycks_math) | train | 1, 2, 3, 4 (replay) | MIT (card) | test never used. MMLU-Pro includes MATH problems (§1) |
 | [deepmind/code_contests](https://huggingface.co/datasets/deepmind/code_contests) | train | 1, 2, 3, 4 (replay) | CC-BY-4.0 (card) | valid / test never used |
 | [google-research-datasets/mbpp](https://huggingface.co/datasets/google-research-datasets/mbpp) (full) | train, validation, prompt | 2, 3 | CC-BY-4.0 (card) | test never used |

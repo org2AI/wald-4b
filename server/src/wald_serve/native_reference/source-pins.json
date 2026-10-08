@@ -1,0 +1,15 @@
+{
+  "status": "FROZEN_INFERENCE_REFERENCE",
+  "files_sha256": {
+    "eval/native_answer_acceptance_v1.py": "764f3a683becd16b87b9ce9bfc01a5fe483ef26c9a3345a724b82780d73ea73a",
+    "eval/systemone_vllm.py": "7586a266a0933c50154aa86faab936b02b617146c357aed91e59467adf20adeb",
+    "eval/vllm_letter.py": "0d8c006c3cff7e43c2b019dde649ba1fac6bf47b960dce676412e4624acc815e",
+    "kev/api.py": "23bac9af0e79702428447c62662b88910071595f6171d9e3c82d6fa35fb0dbd1",
+    "midtrain/letter.py": "90faed3734613799f33b40aae660142e9c8c02d34d73394bf9eb2f6aeba5635f",
+    "midtrain/encode.py": "fb0d35c055c7052a3a3b019cd2cb4de1857ca733467680fa6182a106b045ecec",
+    "midtrain/tokens.py": "7fbc482959e405dcc537bfadf0fa24df2d89bcaaab5919bcb765a70ea81e21de",
+    "midtrain/rawprompt.py": "3b73b26cb96af71188e3dfd1a618c9460bfb69509a72f500d41391794ab219b1"
+  },
+  "no_weights_or_data": true,
+  "native_reader_sha256": "764f3a683becd16b87b9ce9bfc01a5fe483ef26c9a3345a724b82780d73ea73a"
+}

@@ -165,10 +165,12 @@ SEMIF_CHAT_TEMPLATE = ("<|im_start|>system\n{system}<|im_end|>\n"
                        "<|im_start|>assistant\n<think>\n\n</think>\n\n")
 
 
-def semif_options(qtype, criteria):
+def semif_options(qtype, criteria, bare=False):
     """[(option id, description)] of a Kev/TypeSafe question (type, criteria as sent on the wire), in the order the letters
     are given: noul true, false (the criteria text, else "The proposition is <id>."); choice the criteria keys (the value,
-    else the key); score the level indices. Descriptions are "<id>: <text>" (JevK5 decision_options, Jobe options_for)."""
+    else the key); score the level indices. Descriptions are "<id>: <text>" (JevK5 decision_options, Jobe options_for).
+    bare=True (variant D, results/semif-variants-1003; not part of semif_chat/1): the text alone, the id where the text
+    is empty."""
     if qtype == "noul":
         c = criteria or {}
         pairs = [(k, c.get(k) or f"The proposition is {k}.") for k in ("true", "false")]
@@ -179,29 +181,69 @@ def semif_options(qtype, criteria):
         pairs = [(str(i), level) for i, level in enumerate(criteria or [])]
     else:
         raise ValueError(f"unknown question type {qtype!r}")
+    if bare:
+        return [(k, d if d not in (None, "") else k) for k, d in pairs]
     return [(k, f"{k}: {d}") for k, d in pairs]
 
 
-def semif_messages(state, criterion, descriptions):
-    """The two chat messages (system, user JSON) for one question; `state` is the request's state value (any JSON)."""
+def semif_messages(state, criterion, descriptions, system=SEMIF_SYSTEM):
+    """The two chat messages (system, user JSON) for one question; `state` is the request's state value (any JSON).
+    `system` other than SEMIF_SYSTEM is variant S (semif_system_for), not semif_chat/1."""
     if len(descriptions) > len(SEMIF_LETTERS):
         raise TooManyOptions(f"{len(descriptions)} options: the semif_chat readout has {len(SEMIF_LETTERS)} letters")
     payload = {"evidence": state, "criterion": criterion,
                "options": [{"letter": SEMIF_LETTERS[i], "description": d} for i, d in enumerate(descriptions)]}
-    return [{"role": "system", "content": SEMIF_SYSTEM}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
+    return [{"role": "system", "content": system}, {"role": "user", "content": json.dumps(payload, ensure_ascii=False)}]
 
 
-def semif_prompt(state, criterion, descriptions):
+def semif_prompt(state, criterion, descriptions, system=SEMIF_SYSTEM):
     """The full semif_chat prompt text, chat template included and ending after `<think>\n\n</think>\n\n`, where the answer
     letter goes. Tokenized with add_special_tokens=False (the template carries its own special tokens)."""
-    system, user = semif_messages(state, criterion, descriptions)
+    system, user = semif_messages(state, criterion, descriptions, system)
     return SEMIF_CHAT_TEMPLATE.format(system=system["content"], user=user["content"])
 
 
-def semif_question_prompt(state, question):
-    """(prompt, [option id in letter order]) for one Kev/TypeSafe question dict (type, instructions, criteria)."""
-    opts = semif_options(question["type"], question.get("criteria"))
-    return semif_prompt(state, question.get("instructions", ""), [d for _, d in opts]), [k for k, _ in opts]
+def semif_question_prompt(state, question, system_by_type=False, bare_options=False, reverse=False):
+    """(prompt, [option id in letter order]) for one Kev/TypeSafe question dict (type, instructions, criteria). With every
+    flag off (the default) this is semif_chat/1 byte for byte. The flags are the zero-shot variants of
+    results/semif-variants-1003 (ledger 347), never a default: system_by_type = S (semif_system_for picks the system
+    line from the instructions), bare_options = D (descriptions without the "<id>: " prefix), reverse = one half of O
+    (the options in reversed order, so the returned id order is reversed too; the caller averages both orders)."""
+    opts = semif_options(question["type"], question.get("criteria"), bare=bare_options)
+    if reverse:
+        opts = opts[::-1]
+    instructions = question.get("instructions", "")
+    system = semif_system_for(instructions) if system_by_type else SEMIF_SYSTEM
+    return semif_prompt(state, instructions, [d for _, d in opts], system), [k for k, _ in opts]
+
+
+# Variant S (results/semif-variants-1003, ledger 347; pre-registered there): the system line by question class, chosen by
+# a fixed rule on the question's instructions (case-insensitive, first match wins). Judge / verify questions and
+# everything else keep SEMIF_SYSTEM. Every line ends with SEMIF_SYSTEM's answer-format sentences.
+SEMIF_SYSTEM_TAIL = "Choose exactly one listed option. Respond with only its uppercase letter, with no explanation or reasoning."
+SEMIF_CLASS_RULES = (
+    ("probability", re.compile(r"probabilit|likelihood|\blikely\b|\bchances?\b|\bodds\b|forecast", re.I)),
+    ("action", re.compile(r"\btools?\b|\brout(?:e|ed|ing)\b|\bhandler\b|\bspecialist\b|\bcapability category\b|\bbe called\b"
+                          r"|\bwhich action\b|\bsingle action\b|\bnext action\b|\bnext step\b|\bwhat action\b|\baction should\b|\bescalat", re.I)),
+)
+SEMIF_SYSTEM_BY_CLASS = {
+    "probability": "Estimate from the supplied evidence which listed option is most likely to be true for the supplied criterion. " + SEMIF_SYSTEM_TAIL,
+    "action": "Choose the action or tool that best fits the supplied evidence and criterion. " + SEMIF_SYSTEM_TAIL,
+    "default": SEMIF_SYSTEM,
+}
+
+
+def semif_question_class(instructions):
+    """Variant S's class of a question: probability, action or default (first matching rule on the instructions)."""
+    for name, rx in SEMIF_CLASS_RULES:
+        if rx.search(instructions or ""):
+            return name
+    return "default"
+
+
+def semif_system_for(instructions):
+    """Variant S's system line for a question's instructions."""
+    return SEMIF_SYSTEM_BY_CLASS[semif_question_class(instructions)]
 
 
 def semif_letter_ids(tok, prompt, ids, count):

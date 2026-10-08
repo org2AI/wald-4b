@@ -1,18 +1,20 @@
 [project]
 name = "wald-serve"
-version = "0.1.1"
-description = "TypeSafe POST /v1/systemone server for Wald-4B: option-letter readout over vLLM or llama.cpp, effort gate, knockout, calibration"
+version = "0.2.0"
+description = "TypeSafe POST /v1/systemone server for Wald-4B: v2 native chat reader (Auto 0.7, frozen calibration) over vLLM; v1.x option-letter readout over vLLM or llama.cpp"
 readme = "README.md"
 license = { text = "Apache-2.0" }
 requires-python = ">=3.10"
 dependencies = ["pydantic>=2.5"]
 
 [project.optional-dependencies]
-vllm = ["vllm==0.30.0"]
+vllm = ["vllm==0.30.0", "transformers==5.17.0"]
 test = ["pytest>=8"]
 
 [project.scripts]
 wald-serve = "wald_serve.server:main"
+wald-serve-native = "wald_serve.native:main"
+wald-serve-native-vision = "wald_serve.native_vision:main"
 
 [build-system]
 requires = ["setuptools>=68"]
@@ -20,3 +22,6 @@ build-backend = "setuptools.build_meta"
 
 [tool.setuptools.packages.find]
 where = ["src"]
+
+[tool.setuptools.package-data]
+wald_serve = ["native_reference/**/*.py", "native_reference/source-pins.json"]

@@ -2,12 +2,6 @@
 
 # One LoRA for all verticals? (observation, 2026-09-27)
 
-**中文摘要：** 用一个 LoRA 代替每个任务各自一个 LoRA：在 13 个 vertical 的训练数据（外加几个 Decision Index 弱项的训练数据）上混训一个 LoRA，
-1 epoch，一张 RTX PRO 6000 约 2.5 GPU 小时。在各任务固定测试集上逐题配对：读过 Jev 的 12 个任务里 **7 个显著超过 Jev**；和每个任务自己的
-LoRA 比，When2Call / Mind2Web / RewardBench 打平、SGD intent 只差 1.4、agent 轨迹护栏（hard）反而 +3.5；BANKING77 / AndroidControl /
-MetaTool / 提示注入差 4–7 分；**ToxicChat（−11）和两个路由任务（F1 ≈ 2，"永远不交给强模型"）失效**。结论：一个共享适配器能覆盖大多数意图和
-agent 决策任务，代价 1–5 分；正例稀少的护栏任务和按概率排序的路由任务还需要单独的适配器。
-
 ## 1. Question
 
 Can one LoRA serve every vertical, instead of one adapter per task? A customer with a dozen decision points (intent routing,

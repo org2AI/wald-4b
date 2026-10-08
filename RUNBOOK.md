@@ -1,66 +1,48 @@
-# Runbook
+# Runbook: Wald-Q4B v2 (`v2.0`, checkpoint `04701-c22`)
 
-This revision (`v1.2`) holds **Wald-Q4B v1.2**, checkpoint `02600-f19`. Section 1 serves it and reproduces its JevBench public read. Section 2 is the unchanged v1.1 runbook for the complete Decision Index run: that run belongs to **v1.1** (checkpoint `022D0-f7`), so download `--revision v1.1` for it.
+This revision holds **Wald-Q4B v2**: the language model of checkpoint `04701-c22` (its text-only weights file has sha256 `6ae382f5a0ed9f4c53cd0953cb9606b1627a6816350340a59114860e6cf6f29a`; every tensor is byte-identical here) plus Qwen3.5-4B's unchanged vision tower, MTP head and image processor configs, as `Qwen3_5ForConditionalGeneration` in three safetensors shards. MANIFEST.json lists the sha256 of every file. v1.x runbooks are at their tags.
 
-The server code, prompt format, tokenizer and temperature table are byte-identical in v1.1 and v1.2. The two weight shards differ, and `serving.json` declares effort `none` in v1.2 (`high` in v1.1). MANIFEST.json lists the exact model, tokenizer, temperature and code hashes of this revision.
-
-## 1. Wald-Q4B v1.2
+## 1. Serve
 
 ```sh
-hf download org2ai/Wald-4B --revision v1.2 --local-dir ./Wald-Q4B-v1.2
-cd Wald-Q4B-v1.2
-./run.sh "$PWD"          # effort none (declared in serving.json), repeat_state_plain, context 131072
-```
-
-`GET /health` must report `"effort": "none"`. v1.2's JevBench and JevAdvBench results were measured with effort `none` and `repeat_state_plain` on one NVIDIA RTX 5090 32 GB (vLLM 0.30.0, BF16); the JevAdvBench read used a 32,768-token context limit.
-
-JevBench public set (204/231), with `fstandhartinger/jevbench` at `9ec6f15a`:
-
-```sh
-cd jevbench          # a checkout of fstandhartinger/jevbench at 9ec6f15a
-for T in easy original hard; do
-  python -m jevbench.cli run --tasks datasets/public/$T.jsonl --adapter typesafe --endpoint http://127.0.0.1:8000 \
-    --model jev-latest --key-env '' --reserve-usd 0 --cost-basis self_hosted_loopback_no_tariff \
-    --results out/$T/results.jsonl --raw-dir out/raw-$T --ledger out/$T/ledger.jsonl --manifest out/$T/manifest.json \
-    --run-label wald-q4b-v1.2-pub-$T
-done
-cat out/easy/results.jsonl out/original/results.jsonl out/hard/results.jsonl > out/results-all.jsonl
-python -m jevbench.cli summarize --tasks datasets/public/easy.jsonl,datasets/public/original.jsonl,datasets/public/hard.jsonl \
-  --results out/results-all.jsonl --public-export out/summary-all.json
-```
-
-JevAdvBench: send the benchmark's requests (`JevAdvBench/JevAdvBench` at `3218e05`, one question per request) to the same endpoint and score the answers with the benchmark's own analysis code. The benchmark data is CC BY-NC 4.0 and is not redistributed here.
-
-## 2. Wald-Q4B v1.1: complete Decision Index run
-
-### Reproduce Wald-Q4B 22D0-f7
-
-Release: **v1.1** · checkpoint `022D0-f7`. Previous release: **v1.0**.
-
-Download the immutable HF tag 22D0-f7 (or the full HF commit in the submission) into a fresh directory. Do not mix old v1.0 single-file weights with the new shards. MANIFEST.json lists the exact model, tokenizer, temperature and code hashes.
-
-### Convenient packaged server
-
-```sh
-hf download org2ai/Wald-4B --revision v1.1 --local-dir ./Wald-Q4B-22D
-cd Wald-Q4B-22D
+hf download org2ai/Wald-4B --revision v2.0 --local-dir ./Wald-Q4B-v2
+cd Wald-Q4B-v2
+python - <<'PY'   # optional: check every file against MANIFEST.json
+import hashlib, json; m = json.load(open("MANIFEST.json"))
+bad = [f for f, v in m.items() if hashlib.sha256(open(f, "rb").read()).hexdigest() != v["sha256"]]; print("bad:", bad)
+PY
 ./run.sh "$PWD"
 ```
 
-Default policy is high, repeat_state_plain, context 131072. Lower effort modes are alternative configurations with no 54.59 claim. GPU requirements: vLLM 0.30.0, BF16, NVIDIA RTX PRO 6000 96GB for comparison. The packaged server has parity tests against the reference below for prompts and answer probabilities. Scheduling may differ; latency is not established by those tests.
+`GET /health` must report `"engine": "native-v2"`, `"vision": true`, `"checkpoint": "04701-c22"`, `"policy": "Auto0.7"`, `"thought_budget": 512` and `"temperature_sha256": "a0f72cd2d0a653e81051e5a0c77fc1a69131552a8102b580a93a6dbe7908b2da"`. Docker: see `Dockerfile` (same runtime). The server pins the reader (`server/src/wald_serve/native_reference/`, every file sha256-checked at start) and the calibration table, and refuses to start if either differs.
 
-### Frozen reference protocol
+**The evaluated runtime:** vLLM 0.30.0, transformers 5.17.0, torch 2.13.0, BF16, one NVIDIA RTX PRO 6000 (96 GB) per model replica, `VLLM_USE_FLASHINFER_SAMPLER=0`, and the vLLM arguments `--max-model-len 131072 --gpu-memory-utilization 0.85 --max-num-seqs 128 --seed 0` plus `--limit-mm-per-prompt {"image": 16, "video": 0}` and the image budget `--mm-processor-kwargs {"size": {"shortest_edge": 65536, "longest_edge": 1048576}}` (what `wald-serve-native-vision --model` launches; `wald-serve-native` serves text only). Smaller GPUs need a lower `--gpu-memory-utilization` or `--max-model-len`, which is a deviation from the evaluated setup. Thought generation samples (temperature 0.6, top-p 0.95, top-k 20) with a seed derived from the request and question id, so repeated requests normally give the same answer; batch composition on the GPU can still change near-tied answers.
 
-The full run used eval.systemone_vllm from the private development checkout; that checkout was not committed at launch. The included reference/ files freeze the release-time implementation, with hashes in MANIFEST.json. This code provenance limitation is disclosed rather than presenting a later public commit as the original launch commit.
+`config.json` carries `"use_cache": false` from training. vLLM ignores it; if you load the weights with Transformers `generate`, pass `use_cache=True`.
 
-```sh
-python -m vllm.entrypoints.openai.api_server --model "$PWD" --served-model-name Wald-Q4B-022D0-f7-full021 --host 127.0.0.1 --port 8321 --max-model-len 131072 --gpu-memory-utilization 0.60 --max-num-seqs 128 --seed 0
-# Separate terminal, same environment:
-PYTHONPATH="$PWD/reference" python -m eval.systemone_vllm --vllm http://127.0.0.1:8321 --served Wald-Q4B-022D0-f7-full021 --gate 1.01 --budget 512 --temperature "$PWD/temperature.json" --wide knockout --template paren --max-model-len 131072 --return-raw --prompt-format repeat_state_plain --port 8421 --model-name Wald-Q4B-022D0-f7-full021
-```
+## 2. Policies and prompt formats
 
-Install the pinned kit `apolinario/decision-index@87d4650b42b377c0291a89c1f1a879f9b31082bf`, rebuild and verify its complete suite locally, then run its http engine against port 8421. Suite payloads are not redistributed. No request or option pruning/truncation. Complete saved responses are untouched and suitable for maintainer rescoring.
+| Request field | Values | Evaluated settings |
+|---|---|---|
+| `effort` | `none` (one pass), `auto` / `medium` (Auto 0.7, default), `always` / `high` (Always 512) | all three |
+| `prompt_format` | `repeat_state_plain` (default), `plain` | Decision Index and JevBench-XL: `repeat_state_plain`; JevBench public 231 and multistep: `plain` |
 
-Capacity: 131,072 tokens. Wide questions use ordered knockout over all supplied options. A thought that cannot fit falls back to the one-pass read. The full run had 0 unsupported and 0 errors. Concurrency ranged 16–40 request runners for throughput; timing is not the maintainer's serial admission gate. The 32-request preflight median 821.3 ms does not replace 750 private serial requests after warm-up.
+Auto 0.7 gates on the untempered one-pass distribution: a question with 2–26 options thinks natively (Qwen chat template with `enable_thinking`, at most 512 tokens, stop at `</think>`) when its top probability is below 0.7, then the options are read again. More than 26 options: grouped knockout readout, no thought, every option gets a probability. The returned probabilities are tempered with the frozen table (bucket by question type and option count).
 
-Training/data/calibration limitations are in CONTAMINATION.md and PROVENANCE.md. Official admission remains pending.
+## 3. Images
+
+Requests with images (message content parts `image_url` / `image` in `state`, raw base64 under `state` keys `image`, `image_data`, `image_base64`, `image_b64`, or a top-level `images` / `image_data` list; up to 16 per request, bodies up to 64 MB) go through the same frozen reader, with the images carried to vLLM's chat route at their position in the state. They default to the `plain` prompt format. Text-only requests take the text path unchanged. The Decision Index 0.3 run used the text-only weights file; the language-model tensors here are byte-identical, and the text parity of this repository's weights is in `evaluation/v2/serving-parity.json`.
+
+## 4. GGUF (llama.cpp)
+
+`org2ai/Wald-4B-GGUF` holds the v2 quantisations and the vision projector (`Wald-4B-v2-mmproj-F16.gguf`). `wald-serve-native --gguf FILE --tokenizer-dir DIR --effort none` reads text requests through llama-server with the same chat layout; a letter outside llama-server's top-100 log-probabilities gets the reader's floor instead of its exact value. One pass is the checked mode.
+
+## 5. Decision Index 0.3 public suite
+
+Install the official kit `apolinario/decision-index` at `62d2f51de34a2de64906345b6bc3e98e27ff55c7` (branch `v0.3`), rebuild the public suite and verify its hashes with the kit. The evaluated run used the kit's Engine API with the adapter in `evaluation/v2/code/di03_native_auto_engine.py` (it loads `reference/` and `temperature.json`, Auto 0.7, budget 512, `repeat_state_plain`) against vLLM servers started with the arguments above; `evaluation/v2/code/di03_parallel.py` ran four disjoint replicas (SHA256(run_id) mod 4) at 128 concurrent requests each. The packaged server answers the same requests with the same reader; the kit's `http` engine can be pointed at `POST /v1/systemone` instead. Score with the kit's unmodified scorer after inference. Suite payloads are not redistributed. Concurrent throughput is not the maintainers' serial latency.
+
+## 6. Other reads
+
+JevBench public 231, JevBench-XL partitions and multistep_decisions were read with the same reader and engine (one generation per item; the one-pass, Auto 0.7 and Always 512 answers are fixed views of it) and scored with each benchmark's scorer. JevBench-XL is internal and not distributed.
+
+Training data and evaluation caveats: PROVENANCE.md, CONTAMINATION.md.

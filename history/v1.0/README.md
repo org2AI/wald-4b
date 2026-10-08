@@ -21,7 +21,6 @@ pipeline_tag: text-generation
 
 ---
 
-<p align="center"><a href="README.md">English</a> · <a href="docs/readmes/README.zh.md">简体中文</a></p>
 
 ---
 

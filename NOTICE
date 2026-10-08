@@ -4,20 +4,24 @@ Copyright 2026 the Wald-4B authors
 The weights and the serving code in this repository are licensed under the Apache License, Version 2.0 (see LICENSE).
 
 Base model
-  The weights are derived from Qwen/Qwen3.5-4B-Base (https://huggingface.co/Qwen/Qwen3.5-4B-Base), licensed under the
-  Apache License, Version 2.0, copyright the Qwen team, Alibaba Cloud. Its licence and notices continue to apply.
+  The v2 weights (checkpoint 04701-c22) are derived from Qwen/Qwen3.5-4B (https://huggingface.co/Qwen/Qwen3.5-4B,
+  revision 851bf6e806efd8d0a36b00ddf55e13ccb7b8cd0a), licensed under the Apache License, Version 2.0, copyright the Qwen team, Alibaba Cloud.
+  chat_template.jinja is that model's chat template. Its licence and notices continue to apply. The v1.x weights at
+  the tags v1.0-v1.2 are derived from Qwen/Qwen3.5-4B-Base under the same licence.
 
-Third-party code and text in server/
-  server/src/wald_serve/wire.py adapts the request models and the state / option rendering (render, option_text,
-  question_keys, to_record) of Kev (https://github.com/jaredpalmer/kev), Copyright Jared Palmer, licensed under the
-  Apache License, Version 2.0. Modified: the record carries each question's type and keys; unused fields removed.
+Third-party code and text
+  server/src/wald_serve/wire.py and reference/kev/api.py (also server/src/wald_serve/native_reference/kev/api.py)
+  adapt the request models and the state / option rendering of Kev (https://github.com/jaredpalmer/kev), Copyright
+  Jared Palmer, licensed under the Apache License, Version 2.0.
 
-  server/src/wald_serve/prompt.py contains the sentence STATE_REPEAT, copied verbatim from simple-jev
-  (https://github.com/featherless-ai/simple-jev, commit dae340e, hf-server/hf_prompt_policies.py), licensed under the
-  Apache License, Version 2.0. It is used only by the `repeat_state_plain` prompt format.
+  server/src/wald_serve/prompt.py and reference/eval/systemone_vllm.py contain prompt sentences copied verbatim from
+  simple-jev (https://github.com/featherless-ai/simple-jev, commit dae340e, hf-server/hf_prompt_policies.py), licensed
+  under the Apache License, Version 2.0. v2's `repeat_state_plain` format uses only the STATE_REPEAT sentence.
 
-No benchmark items or training data are included in this repository.
+  evaluation/v2/code/ is the adapter and runner used with the Decision Index kit
+  (https://github.com/apolinario/decision-index, MIT); the kit itself is not included.
 
-2026-09-29 release: Wald-Q4B 022D0-f7. See PROVENANCE.md for later training-source rights limitations; the code/base license does not grant rights to third-party training texts.
-
-2026-10-01 release: Wald-Q4B v1.2 (02600-f19), a robustness LoRA stage merged into Wald-Q4B 022D0-f7. The inserted training texts of this stage were written by large frontier models (vendors and model names are not listed); see PROVENANCE.md.
+Training data
+  The training data includes synthetic data generated and/or labelled by large frontier models and public datasets
+  with their own terms; see PROVENANCE.md. The weights and code licence does not grant rights in third-party training
+  texts. No benchmark items or training data are included here.

@@ -1,14 +1,13 @@
-# Evaluation notes
+# Evaluation notes for Wald-Q4B v2 (`04701-c22`)
 
-- Known strict training overlaps were filtered and training-file hashes checked. Weak/semantic overlap and foundation-model pretraining contamination are not ruled out; HLE training overlap has not been independently cleared. Benchmark samples informed development, so this is not a sealed evaluation.
-- The complete **54.59** run used a frozen **256-row XL-dev calibration** fit after excluding known DI matches. No DI labels or DI index score were used to fit it. HLE calibration screening found no additional match.
-- The earlier **54.02** sample used the previous calibration table with known overlaps and remains historical. Old v1.0 disclosures apply to its own weights and are preserved under `v1.0-legacy`.
-- Full-run response artifacts are unchanged. No request payloads or generated reasoning text are included. Official maintainer serial latency validation and leaderboard admission remain pending.
+- **Decision Index.** Every training file of all three stages was scanned against the complete Decision Index 0.3 public suite with our strict matcher: **0 strict hits** ([contamination/trained-on-di-ids.json](contamination/trained-on-di-ids.json): ids, rule, file hashes, what is not covered). Each stage's data had also been gated before training (stage 1 against the 0.2 suite, stage 3 against the 0.3 suite with additional exact full-shingle and character n-gram checks; every hit row was dropped). The training data contains train splits of some benchmarks whose test items the Decision Index also uses ([PROVENANCE.md](PROVENANCE.md)), and the model was developed with the index's task formats in view, so its Decision Index results are not held-out results in the usual sense. The organizer's private tests are unknown to us.
+- **JevBench public set (231).** A development scoreboard: never training data, but read repeatedly during development. Not held out.
+- **JevBench-XL** (internal). Stage 2's and stage 3's new items were exact-state deduplicated against all XL partitions, JevBench, JevAdvBench and the Decision Index sample; the XL TEST partitions were not used for any selection. The XL scores are internal and not independently verifiable.
+- **multistep_decisions (100)** and **JevAdvBench** are evaluation-only.
+- **Checkpoint and policy selection.** Auto 0.7 was fixed as the default before the Decision Index 0.3 runs. The released checkpoint (step 300 of 638) was chosen over the final step and over the earlier C16B / C16C checkpoints using paired screens on a fixed subset of the Decision Index 0.3 public suite and then one full public run; the public index therefore informed the choice of checkpoint. No successful request was repeated.
+- **Calibration.** One frozen temperature table (`temperature.json`, sha256 `a0f72cd2d0a653e81051e5a0c77fc1a69131552a8102b580a93a6dbe7908b2da`), fitted on 275 development rows before these evaluations; no benchmark labels were used, and the Decision Index 0.3 run did not refit it.
+- **Vision.** The vision tower is Qwen3.5-4B's own, unchanged; no image data was used in training. Image results are zero-shot and depend on the base model's pretraining, which may include the public image benchmarks.
+- **Not ruled out:** semantic overlap, and contamination in the base model's pretraining data.
+- No request payloads, gold labels or generated reasoning text are included in this repository.
 
-# v1.2 (checkpoint `02600-f19`)
-
-- v1.2 was trained only on perturbed and unperturbed copies of v1.1's own training questions. A Decision Index blocklist scan of its training and hold-out rows found 0 strict matches (329 weak alerts, all states shorter than 8 words).
-- **JevAdvBench is evaluation-only.** An 8-gram overlap check of every inserted text against every JevAdvBench string (the clean questions and all 9,744 attacked variants) found 0 hits. The perturbation kinds were chosen after v1.1's per-attack JevAdvBench results were known, so the benchmark's attack families informed the training design; its texts did not. Robustness to other attack types is not measured.
-- The JevBench public items were again a development scoreboard: v1.2 had a pass line of at least 201/231 set before training. They were never training data.
-- The **54.59** complete-suite Decision Index result and the files under `evaluation/` other than `evaluation/v1.2/` belong to v1.1. v1.2 has only a one-pass read of a 6,948-request sample.
-- v1.2 uses v1.1's temperature table unchanged. No benchmark labels were used to fit it.
+The notes for v1.x are at their tags.
