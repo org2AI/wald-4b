@@ -12,16 +12,16 @@
     "sha256": "c95bae1d1ce0235ecccd3560b772ec1efb97f348a79f0fbe0a634f0c2ccefe2c"
   },
   "NOTICE": {
-    "bytes": 1553,
-    "sha256": "e1f68705275e9539d5d28e0dc20eae470169af869c308a90378db3ede83dd644"
+    "bytes": 1591,
+    "sha256": "7b37cfe73768e3c01481d0a5d0f097b307cc6b556968c7f4072f6d56b108e061"
   },
   "PROVENANCE.md": {
-    "bytes": 2077,
-    "sha256": "69225fb813578b0d4f9e453a9f0c140c848ec354cf6cca877bcae828c082d3d7"
+    "bytes": 2139,
+    "sha256": "cde98850a90a3159ee17cac4e3e2bc0e267c16e84bb5813b4f97aa8cf4b1ba2e"
   },
   "README.md": {
-    "bytes": 29939,
-    "sha256": "5f02a79558567e33186c0d1e4d462b70a0fa2d960080c2af27b2e08567eb8b98"
+    "bytes": 30224,
+    "sha256": "32afc2d74bb8f202516574d3149ba9d7ffb629b062779f57d4e15bec4f9ce286"
   },
   "RUNBOOK.md": {
     "bytes": 4980,
@@ -44,8 +44,8 @@
     "sha256": "e385b92e333eaaa9395a09daf26c09420645bee242456552a55500db45919bc7"
   },
   "docs/readmes/README.zh.md": {
-    "bytes": 25676,
-    "sha256": "667a7db8482decc260fdf2538de52365f3e130984a173554fb7483e1f5f02d26"
+    "bytes": 25923,
+    "sha256": "a263be7d22369253c99c8e91948fef31b28aa23c50990eb8560d55b4f58aabcc"
   },
   "evaluation/benchmark-summary.json": {
     "bytes": 36014,
@@ -220,8 +220,8 @@
     "sha256": "ad20de47de5bbe7f72417f3d87e6f72aae7987fab913eb814b818e4a4bbc6e1e"
   },
   "model-info.json": {
-    "bytes": 6145,
-    "sha256": "ab370eedeaed830d92310b952993c99ff5cef4068a95d74ea7fa9ce6efb9f06d"
+    "bytes": 6724,
+    "sha256": "e05c47d027b43e7de99beffe99c223c844e8372e7fb1235a2006c2161d02bd03"
   },
   "llms.txt": {
     "bytes": 3316,

@@ -257,8 +257,8 @@ v1.1 combines full-parameter decision training, LoRA refinement, short-thought d
 
 - **Questions:** 5,300 questions drawn from v1.1's own training text. No new source dataset.
 - **Perturbations:** 8,064 perturbed copies. Each one has a short text inserted into the question, after an option or into the state: unrelated sentences and off-topic passages, a bystander's opinion, rumour or analogy that pushes another option, or a fake instruction that claims authority. A smaller share are paraphrases and typos.
-- **Who wrote them:** **the inserted texts and the paraphrases were written by Claude Haiku (an Anthropic model) from our own templates.** A script inserted them, so the original facts stay byte-identical. Typos were made by a script.
-- **Checks:** a separate Claude Haiku call checked every row ("does the edit change the correct answer?") and rejected rows were dropped. Rows on which v1.1 changed its answer were checked a second time by Claude Sonnet.
+- **Who wrote them:** **the inserted texts and the paraphrases were written by large frontier models from our own templates (vendors and model names are not listed).** A script inserted them, so the original facts stay byte-identical. Typos were made by a script.
+- **Checks:** a separate large-frontier-model call checked every row ("does the edit change the correct answer?") and rejected rows were dropped. Rows on which v1.1 changed its answer were checked a second time by another large frontier model.
 - **Targets:** v1.1's own answer distribution on the clean question. The model is taught to answer the perturbed question as v1.1 answers the clean one. 5,000 clean rows are replayed against v1.1 to limit drift.
 - **Separation from the benchmark:** no JevAdvBench text was used. An 8-gram overlap check of every inserted text against every JevAdvBench string (clean questions and all 9,744 attacked variants) found 0 hits.
 
@@ -362,7 +362,7 @@ Leaderboard rows are scored by the maintainers; Wald's number is self-run with t
 
 **Can I fine-tune it for my task?** It is a standard Transformers checkpoint, so common LoRA tooling applies. For v1.0 we trained per-task LoRAs for $0.12–$1.81 of GPU time each; that tooling is not public yet, and those adapters are not validated on v1.1 or v1.2 ([v1.0 notes](https://huggingface.co/org2ai/Wald-4B/blob/main/history/v1.0/README.md)).
 
-**What is the license?** Apache-2.0 for the weights and code. The base model, Qwen3.5-4B-Base, is also Apache-2.0. Some public training sources have their own terms or no stated licence; they are listed in [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/main/PROVENANCE.md). The model and code licence does not grant rights in those texts. v1.2 adds no new source dataset; its added training text was written by Claude Haiku, as described above.
+**What is the license?** Apache-2.0 for the weights and code. The base model, Qwen3.5-4B-Base, is also Apache-2.0. Some public training sources have their own terms or no stated licence; they are listed in [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/main/PROVENANCE.md). The model and code licence does not grant rights in those texts. v1.2 adds no new source dataset; its added training text was written by large frontier models, as described above.
 
 ## Limits
 

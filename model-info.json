@@ -172,7 +172,7 @@
     "revision": "50f94ecd5d6e7e8459e9c198ef811bfaba12a3fe"
   },
   "thinking_note": "v1.2 is a one-pass model. On the JevBench public set it scored 198/231 with medium and with high (one run each) against 204/231 with none. Thinking efforts are evaluated on v1.1.",
-  "training_data_note": "perturbed copies of v1.1 training questions; inserted texts written by Claude Haiku (Anthropic) from our templates; targets are v1.1 answers on the clean questions; no JevAdvBench text",
+  "training_data_note": "perturbed copies of v1.1 training questions; inserted texts written by large frontier models from our templates (vendors and model names not listed); targets are v1.1 answers on the clean questions; no JevAdvBench text",
   "next_version": {
     "version": "v2",
     "checkpoint": "04400-c18",
