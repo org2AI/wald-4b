@@ -20,8 +20,8 @@
     "sha256": "cde98850a90a3159ee17cac4e3e2bc0e267c16e84bb5813b4f97aa8cf4b1ba2e"
   },
   "README.md": {
-    "bytes": 30224,
-    "sha256": "32afc2d74bb8f202516574d3149ba9d7ffb629b062779f57d4e15bec4f9ce286"
+    "bytes": 30264,
+    "sha256": "8281ac8b3a174607c36a86ed67ef41a4a15ebc6e877bfac5e14dacfed5596051"
   },
   "RUNBOOK.md": {
     "bytes": 4980,
@@ -44,8 +44,8 @@
     "sha256": "e385b92e333eaaa9395a09daf26c09420645bee242456552a55500db45919bc7"
   },
   "docs/readmes/README.zh.md": {
-    "bytes": 25923,
-    "sha256": "a263be7d22369253c99c8e91948fef31b28aa23c50990eb8560d55b4f58aabcc"
+    "bytes": 25947,
+    "sha256": "b71694e77194d76820cf1b8c0af411122da348694e2147b7f99ace5292bc4549"
   },
   "evaluation/benchmark-summary.json": {
     "bytes": 36014,
@@ -220,12 +220,12 @@
     "sha256": "ad20de47de5bbe7f72417f3d87e6f72aae7987fab913eb814b818e4a4bbc6e1e"
   },
   "model-info.json": {
-    "bytes": 6724,
-    "sha256": "e05c47d027b43e7de99beffe99c223c844e8372e7fb1235a2006c2161d02bd03"
+    "bytes": 6740,
+    "sha256": "da9878d920256a3016c5cae4bff8fe73db2ee70366bfd02e2ae37251f90b8d12"
   },
   "llms.txt": {
-    "bytes": 3316,
-    "sha256": "4aed0ca0177819e0f6f3b04b34f8021810d83c09c0e5b9a684188fd76c638dcb"
+    "bytes": 3507,
+    "sha256": "6e4102e48bf47d6fb83093fbbd6edc01066a1855642a31e409004865b9100266"
   },
   "CITATION.cff": {
     "bytes": 1063,

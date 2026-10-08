@@ -102,7 +102,7 @@ model-index:
       verified: false
     source:
       name: Self-scored with the JevBench harness; not submitted
-      url: https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json
+      url: https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json
   - task:
       type: text-classification
       name: Robustness of structured decisions to distracting and adversarial text
@@ -117,7 +117,7 @@ model-index:
       verified: false
     source:
       name: Self-run with the benchmark's request bytes and analysis code; not submitted
-      url: https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json
+      url: https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json
 ---
 
 > **v2 development update (2026-10-07):** C16B (`04400-c18`) is selected as the v2 starting checkpoint. [Scores, scope and native-thinking serving requirements](docs/V2.md). v2 weights/server are not yet a public release.
@@ -262,7 +262,7 @@ v1.1 combines full-parameter decision training, LoRA refinement, short-thought d
 - **Targets:** v1.1's own answer distribution on the clean question. The model is taught to answer the perturbed question as v1.1 answers the clean one. 5,000 clean rows are replayed against v1.1 to limit drift.
 - **Separation from the benchmark:** no JevAdvBench text was used. An 8-gram overlap check of every inserted text against every JevAdvBench string (clean questions and all 9,744 attacked variants) found 0 hits.
 
-Data sources and evaluation notes: v1.1 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/CONTAMINATION.md); v1.2 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/CONTAMINATION.md)
+Data sources and evaluation notes: v1.1 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/CONTAMINATION.md); v1.2 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/CONTAMINATION.md)
 
 ## Benchmarks
 
@@ -308,7 +308,7 @@ Two of our internal non-regression sets, which are not public benchmarks, also h
 
 **Re-read after release:** we downloaded the `v1.2` revision anonymously and repeated the `none` read. From a directory holding only the downloaded model files it reproduced 204/231 with the same option on all 231 items (ECE 0.045). From the complete repository directory, two reads gave 204/231 and 205/231 (ECE 0.053), with a different option on one or two near-tied items. The model files are byte-identical in every case; we have not yet explained this small difference. [Details](https://huggingface.co/org2ai/Wald-4B/blob/main/evaluation/v1.2/release-check.json)
 
-**Decision Index (v1.1):** 150,317/150,317 requests succeeded, including HLE. Measured on one RTX PRO 6000 96 GB with the pinned reproduction kit. [Full results](https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results/tree/805716601b2466be324ed6716407b4c3d9267faa/runs/wald-q4b-22d0-f7-full021) · [Per-benchmark scores](https://huggingface.co/org2ai/Wald-4B/blob/main/evaluation/benchmark-summary.json) · [Reproduction guide](https://huggingface.co/org2ai/Wald-4B/blob/main/RUNBOOK.md). The files under `evaluation/` on `main` belong to this v1.1 run; v1.2's numbers are in [`evaluation/v1.2/summary.json`](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json) at the `v1.2` revision. The v1.2 sample row above is a one-pass read of 6,948 requests and cannot be compared with 54.59.
+**Decision Index (v1.1):** 150,317/150,317 requests succeeded, including HLE. Measured on one RTX PRO 6000 96 GB with the pinned reproduction kit. [Full results](https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results/tree/805716601b2466be324ed6716407b4c3d9267faa/runs/wald-q4b-22d0-f7-full021) · [Per-benchmark scores](https://huggingface.co/org2ai/Wald-4B/blob/main/evaluation/benchmark-summary.json) · [Reproduction guide](https://huggingface.co/org2ai/Wald-4B/blob/main/RUNBOOK.md). The files under `evaluation/` on `main` belong to this v1.1 run; v1.2's numbers are in [`evaluation/v1.2/summary.json`](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json) at the `v1.2` revision. The v1.2 sample row above is a one-pass read of 6,948 requests and cannot be compared with 54.59.
 
 ### Latency
 

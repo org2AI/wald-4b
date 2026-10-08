@@ -101,7 +101,7 @@
       ],
       "status": "sample only; no complete-suite run for v1.2"
     },
-    "details": "https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json"
+    "details": "https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json"
   },
   "documentation_languages": [
     "en",
@@ -159,7 +159,7 @@
     "decision_index_submission": "https://github.com/apolinario/decision-index/pull/30",
     "jevbench_request": "https://github.com/fstandhartinger/jevbench/issues/146",
     "api": "https://huggingface.co/org2ai/Wald-4B/blob/main/docs/api.md",
-    "evaluation_summary": "https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json"
+    "evaluation_summary": "https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json"
   },
   "weights_sha256": {
     "model-00001-of-00002.safetensors": "0b15067f769e7388bd598aabafa2ea3211a3a0c4e49e47d07c4f65c65ffc25dd",

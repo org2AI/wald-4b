@@ -22,7 +22,7 @@ Key facts:
 - [Decision Index results dataset](https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results): untouched responses and scores
 - [Decision Index submission PR #30](https://github.com/apolinario/decision-index/pull/30)
 - [JevBench request issue #146](https://github.com/fstandhartinger/jevbench/issues/146)
-- [v1.2 evaluation summary](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json): robustness and non-regression numbers for v1.2
+- [v1.2 evaluation summary](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json): robustness and non-regression numbers for v1.2
 - [model-info.json](https://huggingface.co/org2ai/Wald-4B/blob/main/model-info.json): machine-readable facts
 
 ## Optional

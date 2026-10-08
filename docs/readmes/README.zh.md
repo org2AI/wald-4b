@@ -140,7 +140,7 @@ v1.1 结合全参数决策训练、LoRA 精修、短思考蒸馏和 RLCD。训�
 - **训练目标**：v1.1 自己在干净题上的答案分布。也就是教模型在被扰动的题上，答得和 v1.1 在干净题上一样。另外回放 5,000 条干净题并向 v1.1 对齐，限制漂移。
 - **与基准隔离**：没有使用任何 JevAdvBench 文本。把每段插入文字与 JevAdvBench 的全部字符串（干净题和全部 9,744 个攻击变体）做 8-gram 重叠检查，命中 0 处。
 
-数据来源与评测说明：v1.1 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/CONTAMINATION.md)；v1.2 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/CONTAMINATION.md)
+数据来源与评测说明：v1.1 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.1/CONTAMINATION.md)；v1.2 [PROVENANCE.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/PROVENANCE.md) · [CONTAMINATION.md](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/CONTAMINATION.md)
 
 ## 评测
 
@@ -186,7 +186,7 @@ v1.1 结合全参数决策训练、LoRA 精修、短思考蒸馏和 RLCD。训�
 
 **发布后的复读：** 我们匿名下载了 `v1.2` revision，重跑了 `none` 的读数。只放下载到的模型文件的目录复现了 204/231，231 题的选项全部相同（ECE 0.045）。用完整的仓库目录起服务，两次读数是 204/231 和 205/231（ECE 0.053），有一到两道接近平局的题选项不同。各次读数用的模型文件逐字节相同；这个小差异的原因还没有查明。[详情](https://huggingface.co/org2ai/Wald-4B/blob/main/evaluation/v1.2/release-check.json)
 
-**Decision Index（v1.1）：** 150,317/150,317 个请求全部成功，包含 HLE。在单张 RTX PRO 6000 96 GB 上使用固定版本的复现工具运行。[完整结果](https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results/tree/805716601b2466be324ed6716407b4c3d9267faa/runs/wald-q4b-22d0-f7-full021) · [分项成绩](https://huggingface.co/org2ai/Wald-4B/blob/main/evaluation/benchmark-summary.json) · [复现指南](https://huggingface.co/org2ai/Wald-4B/blob/main/RUNBOOK.md)。`main` 上 `evaluation/` 里的文件属于这次 v1.1 运行；v1.2 的数字在 `v1.2` revision 的 [`evaluation/v1.2/summary.json`](https://huggingface.co/org2ai/Wald-4B/blob/v1.2/evaluation/v1.2/summary.json)。上表 v1.2 的抽样结果是 6,948 个请求的一遍读出，不能与 54.59 比较。
+**Decision Index（v1.1）：** 150,317/150,317 个请求全部成功，包含 HLE。在单张 RTX PRO 6000 96 GB 上使用固定版本的复现工具运行。[完整结果](https://huggingface.co/datasets/org2ai/Wald-Q4B-decision-index-results/tree/805716601b2466be324ed6716407b4c3d9267faa/runs/wald-q4b-22d0-f7-full021) · [分项成绩](https://huggingface.co/org2ai/Wald-4B/blob/main/evaluation/benchmark-summary.json) · [复现指南](https://huggingface.co/org2ai/Wald-4B/blob/main/RUNBOOK.md)。`main` 上 `evaluation/` 里的文件属于这次 v1.1 运行；v1.2 的数字在 `v1.2` revision 的 [`evaluation/v1.2/summary.json`](https://huggingface.co/org2ai/Wald-4B/blob/v1.2-release/evaluation/v1.2/summary.json)。上表 v1.2 的抽样结果是 6,948 个请求的一遍读出，不能与 54.59 比较。
 
 ### 速度
 
